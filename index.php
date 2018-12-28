@@ -1,11 +1,16 @@
 <?php
 
-echo "<br><br>";
+echo "<br>";
 echo "Задание 1-4";
 echo "<br><br>";
 
 class Product
 {
+    protected $id;
+    protected $name;
+    protected $image;
+    protected $description;
+
     public function __construct($id = null, $name = null, $image = null, $description = null)
     {
         $this->id = $id;
@@ -50,6 +55,9 @@ class Product
 
 class ProductPriceCountTotal extends Product
 {
+    protected $price;
+    protected $count;
+
     public function __construct($id = null, $name = null, $image = null, $description = null, $price = null, $count = null)
     {
         parent::__construct($id, $name, $description, $image);
