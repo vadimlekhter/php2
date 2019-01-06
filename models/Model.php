@@ -47,4 +47,30 @@ abstract class Model implements IModel
     {
         // TODO: Implement setSome() method.
     }
+
+    public function updateOne()
+    {
+        // TODO: Implement updateOne() method.
+    }
+
+    public function updateSome()
+    {
+        // TODO: Implement updateSome() method.
+    }
+
+    public function deleteOne()
+    {
+        // TODO: Implement deleteOne() method.
+    }
+
+    public function deleteSome()
+    {
+        // TODO: Implement deleteSome() method.
+    }
+
+    public function deleteAll()
+    {
+        // TODO: Implement deleteAll() method.
+    }
+    
 }

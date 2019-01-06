@@ -14,5 +14,15 @@ interface IModel
 
     function setSome();
 
+    function updateOne();
+
+    function updateSome();
+
+    function deleteOne();
+
+    function deleteSome();
+
+    function deleteAll();
+
     function getTableName() : string ;
 }
