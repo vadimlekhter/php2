@@ -1,9 +1,12 @@
 <?php
 
 use \app\models\Product;
+use \app\services\Db;
+use \app\services\Autoloader;
 
 include '../services/Autoloader.php';
-spl_autoload_register([new app\services\Autoloader(), 'loadClass']);
+include '../config/main.php';
+spl_autoload_register([new Autoloader(), 'loadClass']);
 
-$product = new Product();
-//var_dump($product);
+$product = new Product(new Db());
+var_dump($product);
