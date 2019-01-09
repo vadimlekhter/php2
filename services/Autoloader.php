@@ -8,6 +8,7 @@ class Autoloader
     public function loadClass($className)
     {
         $filename = $_SERVER['DOCUMENT_ROOT'] . preg_replace('/^(.*?)\\\\/', '/../', $className) . ".php";
+        $filename = str_replace('\\', '/', $filename);
         include $filename;
         //var_dump(get_included_files());
     }
