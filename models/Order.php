@@ -5,8 +5,9 @@ namespace app\models;
 
 class Order extends Model
 {
-    public $id_user;
-    public $id_good;
+    public $id;
+    public $user_login;
+    public $good_id;
     public $color;
     public $size;
     public $count;

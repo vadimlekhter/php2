@@ -9,11 +9,7 @@ abstract class Model implements IModel
 {
     protected $db;
 
-    /**
-     * User constructor.
-     */
     public function __construct(IDb $db)
-    //public function __construct($db)
     {
         $this->db = $db;
     }
@@ -21,56 +17,58 @@ abstract class Model implements IModel
     public function getOne(int $id)
     {
         $tableName = $this->getTableName();
-        $sql = "SELECT * FROM {$tableName} WHERE id = {$id}";
-        return $this->db->queryOne($sql);
-    }
-
-    public function getSome()
-    {
-        // TODO: Implement getSome() method.
+        $sql = "SELECT * FROM {$tableName} WHERE id = :id";
+        return $this->db->queryOne($sql, [":id" => $id]);
     }
 
 
     public function getAll()
     {
         $tableName = $this->getTableName();
-        $sql = "SELECT * FROM {$tableName} ";
+        $sql = "SELECT * FROM {$tableName}";
         return $this->db->queryAll($sql);
     }
 
-    public function setOne()
+    public function insert()
     {
-        // TODO: Implement setOne() method.
+        $tableName = $this->getTableName();
+        $arr = get_object_vars($this);
+        array_pop($arr);
+        array_shift($arr);
+        $sql = "INSERT INTO {$tableName} SET";
+        $params = [];
+        foreach ($arr as $key=>$value) {
+            $sql .= " {$key} = :{$key},";
+            $params [':'.$key] = $value;
+        }
+        $sql = substr($sql,0,-1);
+        $this->db->execute($sql, $params);
     }
 
-    public function setSome()
+    public function update()
     {
-        // TODO: Implement setSome() method.
+        $tableName = $this->getTableName();
+        $arr = get_object_vars($this);
+        $id = $arr['id'];
+        array_pop($arr);
+        array_shift($arr);
+        $sql = "UPDATE {$tableName} SET";
+        $params = [":id" => $id];
+        foreach ($arr as $key=>$value) {
+            if ($value != null || $value === '') {
+                $sql .= " {$key} = :{$key},";
+                $params [':' . $key] = $value;
+            }
+        }
+        $sql = substr($sql,0,-1);
+        $sql .= ' WHERE id = :id';
+        $this->db->execute($sql, $params);
     }
 
-    public function updateOne()
+    public function delete(int $id)
     {
-        // TODO: Implement updateOne() method.
+        $tableName = $this->getTableName();
+        $sql = "DELETE FROM {$tableName} WHERE id = :id";
+        return $this->db->queryOne($sql, [":id" => $id]);
     }
-
-    public function updateSome()
-    {
-        // TODO: Implement updateSome() method.
-    }
-
-    public function deleteOne()
-    {
-        // TODO: Implement deleteOne() method.
-    }
-
-    public function deleteSome()
-    {
-        // TODO: Implement deleteSome() method.
-    }
-
-    public function deleteAll()
-    {
-        // TODO: Implement deleteAll() method.
-    }
-    
 }

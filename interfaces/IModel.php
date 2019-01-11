@@ -6,23 +6,13 @@ interface IModel
 {
     function getOne(int $id);
 
-    function getSome();
-
     function getAll();
 
-    function setOne();
+    function insert ();
 
-    function setSome();
+    function update ();
 
-    function updateOne();
-
-    function updateSome();
-
-    function deleteOne();
-
-    function deleteSome();
-
-    function deleteAll();
+    function delete (int $id);
 
     function getTableName() : string ;
 }

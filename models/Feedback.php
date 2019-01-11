@@ -5,8 +5,8 @@ namespace app\models;
 
 class Feedback extends Model
 {
+    public $id;
     public $id_good;
-    public $id_feedback;
     public $author;
     public $text;
 
