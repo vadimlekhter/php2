@@ -9,12 +9,12 @@
 namespace app\models;
 
 
-class Designer extends Model
+class Designer extends Record
 {
     public $id;
     public $designer;
 
-    public function getTableName():string    {
+    public static function getTableName():string    {
         return 'designers';
     }
 }

@@ -9,12 +9,12 @@
 namespace app\models;
 
 
-class Brand extends Model
+class Brand extends Record
 {
     public $id;
     public $brand;
 
-    public function getTableName():string    {
+    public static function getTableName():string    {
         return 'brands';
     }
 }

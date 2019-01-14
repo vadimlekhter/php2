@@ -9,12 +9,12 @@
 namespace app\models;
 
 
-class Color extends Model
+class Color extends Record
 {
     public $id;
     public $color;
 
-    public function getTableName():string    {
+    public static function getTableName():string    {
         return 'colors';
     }
 }

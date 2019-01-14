@@ -3,7 +3,7 @@
 namespace app\models;
 
 
-class User extends Model
+class User extends Record
 {
     public $id;
     public $name;
@@ -13,7 +13,7 @@ class User extends Model
     public $address;
     public $phone;
 
-    public function getTableName():string
+    public static function getTableName():string
     {
         return 'users';
     }

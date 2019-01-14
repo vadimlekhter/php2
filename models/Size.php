@@ -9,12 +9,12 @@
 namespace app\models;
 
 
-class Size extends Model
+class Size extends Record
 {
     public $id;
     public $size;
 
-    public function getTableName():string    {
+    public static function getTableName():string    {
         return 'sizes';
     }
 }

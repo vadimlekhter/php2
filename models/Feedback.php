@@ -3,14 +3,14 @@
 namespace app\models;
 
 
-class Feedback extends Model
+class Feedback extends Record
 {
     public $id;
     public $id_good;
     public $author;
     public $text;
 
-    public function getTableName():string
+    public static function getTableName():string
     {
         return 'feedbacks';
     }
