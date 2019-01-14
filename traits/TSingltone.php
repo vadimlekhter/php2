@@ -29,3 +29,4 @@ trait TSingltone
         return static::$instance;
     }
 }
+

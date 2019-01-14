@@ -11,29 +11,41 @@ use \app\models\Color;
 use \app\models\Size;
 use \app\services\Db;
 use \app\services\Autoloader;
+use \app\controllers\Controller;
 
 include '../services/Autoloader.php';
 include '../config/main.php';
 spl_autoload_register([new Autoloader(), 'loadClass']);
 
-$product = new Product(Db::getInstance());
+$controllerName = $_GET['c']?: DEFAULT_CONTROLLER;
+$actionName = $_GET['a'];
 
-$user = new User(Db::getInstance());
+$controllerClass = CONTROLLER_NAMESPACE.ucfirst($controllerName).'Controller';
 
-$order = new Order(Db::getInstance());
+if (class_exists($controllerClass)) {
+    $controller = new $controllerClass;
+    $controller->runAction($actionName);
+}
 
-$feedback = new Feedback(Db::getInstance());
 
-$brand = new Brand(Db::getInstance());
 
-$designer = new Designer(Db::getInstance());
+//$product = new Product();
 
-$category = new Category(Db::getInstance());
+//$user = new User();
 
-$color = new Color(Db::getInstance());
+/*$order = new Order();
 
-$size = new Size (Db::getInstance());
+$feedback = new Feedback();
 
+$brand = new Brand();
+
+$designer = new Designer();
+
+$category = new Category();
+
+$color = new Color();
+
+$size = new Size ();
 
 /*$color->color = "Белый";
 $color->insert();
@@ -86,23 +98,32 @@ $product->price = 350.00;
 $product->insert();*/
 
 /*$user = new User(Db::getInstance());
+$user = $user->getOne(6);
 $user->login = 'jim';
 $user->password = 'jim';
 $user->name = 'Jim Beam';
 $user->email = 'j@j.ru';
-$user->address = 'Paris';
+$user->address = 'Roma';
 $user->phone = '+33(333)333-33-33';
-$user->insert();*/
+$user->save();*/
 
-/*$product->id = 5;
-$product->category = 2;
+/*$product->id = 3;
+$product = $product->getOne(2);
+var_dump($product);
 $product->brand = 2;
-$product->designer = 2;*/
-//$product->update();
+$product->designer = 1;
+$product->update();*/
 
 //$product->delete(6);
 //var_dump($product->getOne(1));
 
-$size->size = 'XXXL';
-$size->insert();
-var_dump($size->getAll());
+
+//var_dump($size->getOne(3));
+//$product = $product->getOne(5);
+//var_dump($product);
+//$product->delete();
+//$user = $user->getOne(4);
+//$user->delete();
+//var_dump($user->getAll());
+
+//var_dump($user::getOne(1));
