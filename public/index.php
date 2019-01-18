@@ -13,9 +13,13 @@ use \app\services\Db;
 use \app\services\Autoloader;
 use \app\controllers\Controller;
 
-include '../services/Autoloader.php';
-include '../config/main.php';
-spl_autoload_register([new Autoloader(), 'loadClass']);
+//include '../services/Autoloader.php';
+//include '../config/main.php';
+require '../vendor/autoload.php';
+//require '../services/renderers/TwigRenderer.php';
+
+
+//spl_autoload_register([new Autoloader(), 'loadClass']);
 
 $controllerName = $_GET['c']?: DEFAULT_CONTROLLER;
 $actionName = $_GET['a'];
@@ -23,9 +27,25 @@ $actionName = $_GET['a'];
 $controllerClass = CONTROLLER_NAMESPACE.ucfirst($controllerName).'Controller';
 
 if (class_exists($controllerClass)) {
-    $controller = new $controllerClass;
+
+    /*$controller = new $controllerClass(
+        new \app\services\renderers\TemplateRenderer()
+    );*/
+
+    $controller = new $controllerClass(
+        new \app\services\renderers\TwigRenderer()
+    );
+
+    /*$controller = new $controllerClass(
+        new TwigRenderer()
+    );*/
+
+    $controller->setContentRenderer (new \app\services\renderers\ContentRenderer());
+
     $controller->runAction($actionName);
 }
+
+
 
 
 
@@ -33,19 +53,19 @@ if (class_exists($controllerClass)) {
 
 //$user = new User();
 
-/*$order = new Order();
+//$order = new Order();
 
-$feedback = new Feedback();
+//$feedback = new Feedback();
 
-$brand = new Brand();
+//$brand = new Brand();
 
-$designer = new Designer();
+//$designer = new Designer();
 
-$category = new Category();
+//$category = new Category();
 
-$color = new Color();
+//$color = new Color();
 
-$size = new Size ();
+//$size = new Size ();
 
 /*$color->color = "Белый";
 $color->insert();
@@ -73,11 +93,9 @@ $size->insert();
 $size->size = "XXL";
 $size->insert();*/
 
-
-/*$designer->designer = "CK";
-$designer->insert();
-$designer->designer = "Gucci";
-$designer->insert();*/
+//$designer->id = null;
+//$designer->designer = "CK";
+//$designer->insert();
 
 /*$brand->brand = "CK";
 $brand->insert();
@@ -109,9 +127,7 @@ $user->save();*/
 
 /*$product->id = 3;
 $product = $product->getOne(2);
-var_dump($product);
 $product->brand = 2;
-$product->designer = 1;
 $product->update();*/
 
 //$product->delete(6);

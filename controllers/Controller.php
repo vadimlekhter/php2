@@ -4,13 +4,35 @@ namespace app\controllers;
 
 
 use app\interfaces\IController;
+use app\interfaces\IRenderer;
+use app\interfaces\IContentRenderer;
+use app\services\renderers\ContentRenderer;
+use app\services\renderers\TemplateRenderer;
 
 abstract class Controller implements IController
+
 {
     protected $action;
     protected $defaultAction = 'index';
     protected $layout = 'main';
     protected $useLayout = true;
+
+    protected $templateRenderer;
+    protected $contentRenderer;
+
+    /**
+     * Controller constructor.
+     * @param $renderer
+     */
+    public function __construct(IRenderer $templateRenderer)
+    {
+        $this->templateRenderer = $templateRenderer;
+    }
+
+    public function setContentRenderer (IContentRenderer $contentRenderer) {
+        $this->contentRenderer = $contentRenderer;
+    }
+
 
     public function runAction($action = null)
     {
@@ -35,15 +57,6 @@ abstract class Controller implements IController
 
     protected function renderTemplate($template, $params = [])
     {
-        ob_start();
-        $templatePath = TEMPLATES_DIR . $template . ".php";
-        extract($params);
-        include $templatePath;
-        return ob_get_clean();
-    }
-
-    protected function renderContent ($content) {
-        $templatePath = TEMPLATES_DIR. 'layouts/'.$this->layout.'.php';
-        include $templatePath;
+        return $this->templateRenderer->render($template, $params);
     }
 }
