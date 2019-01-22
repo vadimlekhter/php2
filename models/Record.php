@@ -8,7 +8,7 @@ use app\services\Db;
 
 class RecordExeption extends \Exception {}
 
-abstract class Record implements IRecord
+class Record implements IRecord
 {
 
 }

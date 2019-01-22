@@ -45,7 +45,7 @@ abstract class Repository implements IRepository
         return $this->db->queryObj($sql, [], $this->getRecordClass());
     }
 
-    public function insert($record)
+    public function insert(Record $record)
     {
         $tableName = $this->getTableName();
         $sql = "INSERT INTO {$tableName} SET";
