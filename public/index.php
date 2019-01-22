@@ -43,15 +43,15 @@ if (class_exists($controllerClass)) {
 
 //$product = new Product();
 
-$cart = new CartRepository();
+/*$cart = new CartRepository();
 $record = new \app\models\Record();
 $record->id = null;
 $record->user_id = 2;
-$record->good_id = 2;
+$record->good_id = 2;*/
 
 
 
-$cart->insert($record);
+$cart->save($record);
 
 //$user = new User();
 
