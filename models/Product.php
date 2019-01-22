@@ -15,7 +15,7 @@ class Product extends Record
     public $image_3;
     public $price;
 
-    public static function getTableName():string    {
+    /*public static function getTableName():string    {
         return 'products';
-    }
+    }*/
 }

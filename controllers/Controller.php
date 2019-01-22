@@ -6,8 +6,11 @@ namespace app\controllers;
 use app\interfaces\IController;
 use app\interfaces\IRenderer;
 use app\interfaces\IContentRenderer;
+use app\models\RecordExeption;
 use app\services\renderers\ContentRenderer;
 use app\services\renderers\TemplateRenderer;
+
+class GetOneException extends \Exception {}
 
 abstract class Controller implements IController
 
@@ -29,9 +32,9 @@ abstract class Controller implements IController
         $this->templateRenderer = $templateRenderer;
     }
 
-    public function setContentRenderer (IContentRenderer $contentRenderer) {
+    /*public function setContentRenderer (IContentRenderer $contentRenderer) {
         $this->contentRenderer = $contentRenderer;
-    }
+    }*/
 
 
     public function runAction($action = null)
@@ -39,9 +42,37 @@ abstract class Controller implements IController
         $this->action = $action ?: $this->defaultAction;
         $method = 'action' . ucfirst($this->action);
         if (method_exists($this, $method)) {
-            $this->$method();
+            try {
+                $this->$method();
+            } catch (\PDOException $e) {
+                header('Refresh: 3; URL=http:/error_404.php');
+                echo "Произошла ошибка базы данных";
+                var_dump($e->getMessage());
+                //exit();
+            }
+
+            catch (RecordExeption $e) {
+                header('Refresh: 3; URL=http:/error_404.php');
+                echo "Произошла ошибка подключения к БД";
+                var_dump($e->getMessage());
+                //exit();
+            }
+
+            catch (GetOneException $e) {
+                header('Refresh: 3; URL=http:/error_404.php');
+                echo "Произошла ошибка подключения к БД";
+                var_dump($e->getMessage());
+                //exit();
+            }
+
+            catch (\Exception $e) {
+                header('Refresh: 3; URL=http:/error_404.php');
+                echo "Произошла ошибка";
+                var_dump($e->getMessage());
+                //exit();
+            }
         } else {
-            echo '404';
+            header('Location: http:/error_404.php');
         }
     }
 

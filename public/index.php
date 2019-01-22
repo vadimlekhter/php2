@@ -1,6 +1,7 @@
 <?php
 
 use \app\models\Product;
+use \app\models\repositories\CartRepository;
 use \app\models\User;
 use \app\models\Order;
 use \app\models\Feedback;
@@ -13,43 +14,43 @@ use \app\services\Db;
 use \app\services\Autoloader;
 use \app\controllers\Controller;
 
-//include '../services/Autoloader.php';
-//include '../config/main.php';
+
 require '../vendor/autoload.php';
-//require '../services/renderers/TwigRenderer.php';
 
+$request = new \app\services\Request();
 
-//spl_autoload_register([new Autoloader(), 'loadClass']);
-
-$controllerName = $_GET['c']?: DEFAULT_CONTROLLER;
-$actionName = $_GET['a'];
+$controllerName = $request->getControllerName() ?: DEFAULT_CONTROLLER;
+$actionName = $request->getActionName();
 
 $controllerClass = CONTROLLER_NAMESPACE.ucfirst($controllerName).'Controller';
 
 if (class_exists($controllerClass)) {
 
-    /*$controller = new $controllerClass(
-        new \app\services\renderers\TemplateRenderer()
-    );*/
-
     $controller = new $controllerClass(
-        new \app\services\renderers\TwigRenderer()
+        new \app\services\renderers\TemplateRenderer()
     );
 
     /*$controller = new $controllerClass(
-        new TwigRenderer()
+        new \app\services\renderers\TwigRenderer()
     );*/
 
-    $controller->setContentRenderer (new \app\services\renderers\ContentRenderer());
-
     $controller->runAction($actionName);
+} else {
+    header('Location: http:/error_404.php');
 }
 
 
 
-
-
 //$product = new Product();
+/*
+$cart = new CartRepository();
+$record->id = null;
+$record->user_id = 2;
+$record->good_id = 2;
+
+var_dump($record);
+
+$cart->insert($record);*/
 
 //$user = new User();
 

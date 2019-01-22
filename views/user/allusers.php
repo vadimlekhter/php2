@@ -1,8 +1,10 @@
 <?php /** @var \app\models\User $user */  ?>
-<p><?=$user->id?></p>
-<h3>Login: <?=$user->login?></h3>
-<p>Name: <?=$user->name?></p>
-<p>E-mail: <?=$user->email?></p>
-<p>Address: <?=$user->address?></p>
-<p>Phone: <?=$user->phone?></p>
+<?php foreach ($user as $item): ?>
+<p><?=$item->id?></p>
+<h3>Login: <?=$item->login?></h3>
+<p>Name: <?=$item->name?></p>
+<p>E-mail: <?=$item->email?></p>
+<p>Address: <?=$item->address?></p>
+<p>Phone: <?=$item->phone?></p>
 <hr>
+<?php endforeach ?>

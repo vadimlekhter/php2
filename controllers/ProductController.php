@@ -8,26 +8,27 @@
 
 namespace app\controllers;
 
-use app\models\Product;
+use app\models\repositories\ProductRepository;
+use app\services\Request;
 
 class ProductController extends Controller
 {
     public function actionIndex()
     {
-        $product = Product::getAll();
-        $this->useLayout = false;
-        $content ='';
-        foreach ($product as $item) {
-            //$content .= $this->render('product/catalog', ['product' => $item]);
-            $content .= $this->render('/product/catalog_twig.html', ['product' => $item]);
-        }
-        $this->contentRenderer->renderContent($content, $this->layout);
+        $product = (new ProductRepository())->getAll();
+        echo $this->render('product/catalog', ['product' => $product]);
     }
 
     public function actionCard()
     {
-        $id = $_GET['id'];
-        $product = Product::getOne($id);
-        echo $this->render($_GET['c'].'/card', ['product' => $product]);
+
+
+
+        $id = (new Request())->getParams()['id'];
+        if (is_null($id)) {
+            throw new GetOneException ("Неверный запрос");
+        }
+        $product = (new ProductRepository())->getOne($id);
+        echo $this->render((new Request())->getControllerName() . '/card', ['product' => $product]);
     }
 }

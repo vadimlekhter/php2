@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Каталог</title>
+</head>
+<body>
+<br>
+
+{% for item in product %}
+
+    Наименование : {{ item.name }} <br>
+    Описание : {{ item.description }} <br>
+    Цена : {{ item.price }} <br><br>
+
+{% endfor %}
+
+</body>
+</html>

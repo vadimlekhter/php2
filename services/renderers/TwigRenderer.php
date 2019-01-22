@@ -13,23 +13,20 @@ use app\interfaces\IRenderer;
 
 class TwigRenderer implements IRenderer
 {
+    protected $templater;
+
+    public function __construct()
+    {
+        $this->templater = new \Twig_Environment(
+            new \Twig_Loader_Filesystem(TEMPLATES_DIR),
+            ['autoescape' => false]
+        );
+    }
+
     public function render($template, $params = [])
     {
-        ob_start();
-        extract($params);
-        foreach ($params as $key=>$value) {
-            $loader = new \Twig_Loader_Filesystem(TEMPLATES_DIR);
-            $twig = new \Twig_Environment($loader, array(
-                'auto_reload' => true));
-
-            if ($key == 'product') {
-                echo $twig->render($template, ['name' => ${$key}->name, 'price' => ${$key}->price,
-                    'description' => ${$key}->description]);
-            } elseif ($key == 'user') {
-                echo $twig->render($template, ['name' => ${$key}->name, 'login' => ${$key}->login,
-                    'email'=> ${$key}->email, 'phone'=> ${$key}->phone, 'address' => ${$key}->address]);
-            }
-        }
-        return ob_get_clean();
+        $template .= '.twig';
+        return $this->templater->render($template, $params);
     }
 }
+

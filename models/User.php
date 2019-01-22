@@ -13,8 +13,8 @@ class User extends Record
     public $address;
     public $phone;
 
-    public static function getTableName():string
+    /*public static function getTableName():string
     {
         return 'users';
-    }
+    }*/
 }

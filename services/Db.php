@@ -23,11 +23,12 @@ class Db implements IDb
     private function getConnection()
     {
         if (is_null($this->conn)) {
-            $this->conn = new \PDO(
-                $this->prepareDsnString(),
-                $this->config['login'],
-                $this->config['password']
-            );
+                $this->conn = new \PDO(
+                    $this->prepareDsnString(),
+                    $this->config['login'],
+                    $this->config['password']
+                );
+
             $this->conn->setAttribute(\PDO::ATTR_DEFAULT_FETCH_MODE, \PDO::FETCH_ASSOC);
         }
         return $this->conn;
@@ -62,18 +63,6 @@ class Db implements IDb
         $this->query($sql, $params);
         return true;
     }
-
-    /*public function queryOne(string $sql, array $params = [])
-    {
-        return $this->queryAll($sql, $params)[0];
-    }*/
-
-    /*public function queryAll(string $sql, array $params = [], $className)
-    {
-        $pdoStatement = $this->query($sql, $params);
-        $pdoStatement->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, $className);
-        return $pdoStatement->fetchAll();
-    }*/
 
     public function getLastInsertId () {
         return $this->getConnection()->lastInsertId();

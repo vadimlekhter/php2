@@ -8,26 +8,23 @@
 
 namespace app\controllers;
 
-use app\models\User;
-
+use app\models\repositories\UserRepository;
+use app\services\Request;
 class UserController extends Controller
 {
     public function actionIndex()
     {
-        $product = User::getAll();
-        $this->useLayout = false;
-        $content ='';
-        foreach ($product as $item) {
-            //$content .= $this->render($_GET['c'].'/allusers', ['user' => $item]);
-            $content .= $this->render($_GET['c'].'/allusers_twig.html', ['user' => $item]);
-        }
-        $this->contentRenderer->renderContent($content, $this->layout);
+        $user = (new UserRepository())->getAll();
+        echo $this->render((new Request())->getControllerName() . '/allusers', ['user' => $user]);
     }
 
     public function actionOneuser()
     {
-        $id = $_GET['id'];
-        $user = User::getOne($id);
-        echo $this->render($_GET['c'].'/oneuser', ['user' => $user]);
+        $id = (new Request())->getParams()['id'];
+        if (is_null($id)) {
+            throw new GetOneException ("Неверный запрос");
+        }
+        $user = (new UserRepository())->getOne($id);
+        echo $this->render((new Request())->getControllerName() . '/oneuser', ['user' => $user]);
     }
 }
