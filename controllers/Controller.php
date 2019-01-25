@@ -6,7 +6,7 @@ namespace app\controllers;
 use app\interfaces\IController;
 use app\interfaces\IRenderer;
 use app\interfaces\IContentRenderer;
-use app\models\RecordExeption;
+use app\models\repositories\RecordException;
 use app\services\renderers\ContentRenderer;
 use app\services\renderers\TemplateRenderer;
 
@@ -46,29 +46,29 @@ abstract class Controller implements IController
                 $this->$method();
             } catch (\PDOException $e) {
                 header('Refresh: 3; URL=http:/error_404.php');
-                echo "Произошла ошибка базы данных";
-                var_dump($e->getMessage());
+                echo "Произошла ошибка базы данных. ";
+                echo $e->getMessage();
                 //exit();
             }
 
-            catch (RecordExeption $e) {
+            catch (RecordException $e) {
                 header('Refresh: 3; URL=http:/error_404.php');
-                echo "Произошла ошибка подключения к БД";
-                var_dump($e->getMessage());
+                echo "Произошла ошибка подключения к БД. ";
+                echo $e->getMessage();
                 //exit();
             }
 
             catch (GetOneException $e) {
                 header('Refresh: 3; URL=http:/error_404.php');
-                echo "Произошла ошибка подключения к БД";
-                var_dump($e->getMessage());
+                echo "Произошла ошибка подключения к БД, нет id. ";
+                echo $e->getMessage();
                 //exit();
             }
 
             catch (\Exception $e) {
                 header('Refresh: 3; URL=http:/error_404.php');
-                echo "Произошла ошибка";
-                var_dump($e->getMessage());
+                echo "Произошла ошибка. ";
+                echo $e->getMessage();
                 //exit();
             }
         } else {
@@ -78,6 +78,7 @@ abstract class Controller implements IController
 
     protected function render($template, $params = [])
     {
+        //var_dump($params);
         if ($this->useLayout) {
             return $this->renderTemplate(
                 "layouts/{$this->layout}", ['content' => $this->renderTemplate($template, $params)]

@@ -8,6 +8,7 @@
 
 namespace app\controllers;
 
+use app\base\App;
 use app\models\repositories\ProductRepository;
 use app\services\Request;
 
@@ -21,14 +22,16 @@ class ProductController extends Controller
 
     public function actionCard()
     {
-
-
-
-        $id = (new Request())->getParams()['id'];
-        if (is_null($id)) {
-            throw new GetOneException ("Неверный запрос");
+        $id = (App::call()->request)->getParams()['id'];
+        if (is_null($id) || !is_numeric($id)) {
+            throw new GetOneException ("Неверный запрос.");
         }
         $product = (new ProductRepository())->getOne($id);
-        echo $this->render((new Request())->getControllerName() . '/card', ['product' => $product]);
+        if (is_null($product)) {
+            throw new GetOneException ("Неверный запрос.");
+        }
+        $str = get_class($this);
+        $class_name = strtolower(str_replace('Controller', '', end(explode('\\', $str))));
+        echo $this->render($class_name . '/card', ['product' => $product]);
     }
 }

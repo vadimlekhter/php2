@@ -14,7 +14,14 @@ class Category extends Record
     public $id;
     public $category;
 
-    public static function getTableName():string    {
-        return 'categories';
+    /**
+     * Category constructor.
+     * @param $id
+     * @param $category
+     */
+    public function __construct($id = null, $category = null)
+    {
+        $this->id = $id;
+        $this->category = $category;
     }
 }

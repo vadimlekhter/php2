@@ -14,7 +14,14 @@ class Size extends Record
     public $id;
     public $size;
 
-    public static function getTableName():string    {
-        return 'sizes';
+    /**
+     * Size constructor.
+     * @param $id
+     * @param $size
+     */
+    public function __construct($id=null, $size=null)
+    {
+        $this->id = $id;
+        $this->size = $size;
     }
 }

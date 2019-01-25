@@ -7,18 +7,25 @@ use \app\traits\TSingltone;
 
 class Db implements IDb
 {
-    use TSingltone;
 
-    private $config = [
-        'driver' => 'mysql',
-        'host' => 'localhost',
-        'login' => 'root',
-        'password' => '',
-        'database' => 'proekt_oop',
-        'charset' => 'utf8'
-    ];
+
+    private $config;
 
     private $conn = null;
+
+
+    public function __construct($driver, $host, $login, $password, $database, $charset)
+    {
+        $this->config =[
+            'driver' => $driver,
+            'host' => $host,
+            'login'=> $login,
+            'password' => $password,
+            'database' =>$database,
+            'charset' => $charset
+        ];
+    }
+
 
     private function getConnection()
     {

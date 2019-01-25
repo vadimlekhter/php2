@@ -14,7 +14,14 @@ class Designer extends Record
     public $id;
     public $designer;
 
-    public static function getTableName():string    {
-        return 'designers';
+    /**
+     * Designer constructor.
+     * @param $id
+     * @param $designer
+     */
+    public function __construct($id=null, $designer=null)
+    {
+        $this->id = $id;
+        $this->designer = $designer;
     }
 }

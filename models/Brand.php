@@ -14,7 +14,16 @@ class Brand extends Record
     public $id;
     public $brand;
 
-    public static function getTableName():string    {
-        return 'brands';
+    /**
+     * Brand constructor.
+     * @param $id
+     * @param $brand
+     */
+    public function __construct($id = null, $brand = null)
+    {
+        $this->id = $id;
+        $this->brand = $brand;
     }
+
+
 }

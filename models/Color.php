@@ -14,7 +14,14 @@ class Color extends Record
     public $id;
     public $color;
 
-    public static function getTableName():string    {
-        return 'colors';
+    /**
+     * Color constructor.
+     * @param $id
+     * @param $color
+     */
+    public function __construct($id = null, $color = null)
+    {
+        $this->id = $id;
+        $this->color = $color;
     }
 }

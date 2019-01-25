@@ -20,4 +20,18 @@ class OrderRepository extends Repository
     {
         return Order::class;
     }
+
+    public function getOrderbyId($id)
+    {
+        $tableName = $this->getTableName();
+        $sql = "SELECT * FROM {$tableName} WHERE user_id = :user_id";
+        return $this->find($sql, [":user_id" => $id]);
+    }
+
+    public function getOrderbySession($sessionId)
+    {
+        $tableName = $this->getTableName();
+        $sql = "SELECT * FROM {$tableName} WHERE session_id = :session_id";
+        return $this->find($sql, [":session_id" => $sessionId]);
+    }
 }

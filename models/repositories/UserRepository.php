@@ -22,4 +22,12 @@ class UserRepository extends Repository
     {
         return User::class;
     }
+
+    public function checkUser($login)
+    {
+        $tableName = $this->getTableName();
+        $sql = "SELECT * FROM {$tableName} WHERE login = :login";
+        return $this->find($sql, [":login" => $login])[0];
+    }
+
 }

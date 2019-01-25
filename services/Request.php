@@ -3,6 +3,7 @@
 
 namespace app\services;
 
+class RequestParsingException extends \Exception {};
 
 class Request
 {
@@ -10,7 +11,8 @@ class Request
     protected $controllerName;
     protected $actionName;
     protected $params;
-    protected $isAjax = false;
+    protected $requestMethod;
+    protected $referer;
 
     protected $pattern = '#(?P<controller>\w+)[/]?(?P<action>\w+)?[/]?[?]?(?P<params>.*)#ui';
 
@@ -20,6 +22,8 @@ class Request
     public function __construct()
     {
         $this->requestString = $_SERVER['REQUEST_URI'];
+        $this->requestMethod = $_SERVER['REQUEST_METHOD'];
+        $this->referer = $_SERVER['HTTP_REFERER'];
         $this->parseRequest();
     }
 
@@ -48,17 +52,20 @@ class Request
         return $this->params;
     }
 
-    public function getMethod()
-    {
-        return $_SERVER['REQUEST_METHOD'];
+    public function isGet () {
+        return $this->requestMethod == 'GET';
+    }
+
+    public function isPost () {
+        return $this->requestMethod == 'POST';
     }
 
     public function getIsAjax()
     {
-        if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && !empty($_SERVER['HTTP_X_REQUESTED_WITH'])
-            && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
-            $this->isAjax = true;
-            return $this->isAjax;
-        }
+       return $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest';
+    }
+
+    public function getReferer () {
+        return $this->referer;
     }
 }

@@ -8,9 +8,14 @@
 
 namespace app\models\repositories;
 
+use app\base\App;
 use app\interfaces\IRepository;
 use app\models\Record;
 use app\services\Db;
+use app\controllers;
+
+
+class RecordException extends \Exception {}
 
 abstract class Repository implements IRepository
 {
@@ -23,26 +28,29 @@ abstract class Repository implements IRepository
 
     protected function getDb()
     {
-        $db = Db::getInstance();
-        //$db = null;
+        $db = App::call()->db;
         if (empty($db)) {
-            throw new RecordExeption ("Не удалось создать соединение с базой");
+            throw new RecordException ("Не удалось создать соединение с базой");
         }
         return $db;
+    }
+
+    public function find ($sql, $params =[]) {
+        return $this->db->queryObj($sql, $params, $this->getRecordClass());
     }
 
     public function getOne(int $id)
     {
         $tableName = $this->getTableName();
         $sql = "SELECT * FROM {$tableName} WHERE id = :id";
-        return $this->db->queryObj($sql, [":id" => $id], $this->getRecordClass())[0];
+        return $this->find($sql, [":id" => $id])[0];
     }
 
     public function getAll()
     {
         $tableName = $this->getTableName();
         $sql = "SELECT * FROM {$tableName}";
-        return $this->db->queryObj($sql, [], $this->getRecordClass());
+        return $this->find($sql);
     }
 
     public function insert(Record $record)
@@ -58,7 +66,7 @@ abstract class Repository implements IRepository
         }
         $sql = substr($sql, 0, -1);
         $this->db->execute($sql, $params);
-        $record->id = $this->db->getLastInsertId();
+
     }
 
     public function update(Record $record)
@@ -88,6 +96,8 @@ abstract class Repository implements IRepository
     {
         if ($record->id == null) {
             $this->insert($record);
+            $record->id = $this->db->getLastInsertId();
+            return $record->id;
         }
         $this->update($record);
     }

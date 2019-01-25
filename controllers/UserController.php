@@ -8,23 +8,72 @@
 
 namespace app\controllers;
 
+use app\base\App;
+use app\models\User;
 use app\models\repositories\UserRepository;
-use app\services\Request;
 class UserController extends Controller
 {
     public function actionIndex()
     {
-        $user = (new UserRepository())->getAll();
-        echo $this->render((new Request())->getControllerName() . '/allusers', ['user' => $user]);
+        /*$user = (new UserRepository())->getAll();
+        $str = get_class($this);
+        $class_name = strtolower(str_replace('Controller', '', end(explode('\\', $str))));
+        echo $this->render($class_name . '/allusers', ['user' => $user]);*/
     }
 
-    public function actionOneuser()
+    /*public function actionOneuser()
     {
-        $id = (new Request())->getParams()['id'];
-        if (is_null($id)) {
-            throw new GetOneException ("Неверный запрос");
+        $id = (App::call()->request)->getParams()['id'];
+        if (is_null($id) || !is_numeric($id)) {
+            throw new GetOneException ("Неверный запрос.");
         }
         $user = (new UserRepository())->getOne($id);
-        echo $this->render((new Request())->getControllerName() . '/oneuser', ['user' => $user]);
+        if (is_null($user)) {
+            throw new GetOneException ("Неверный запрос.");
+        }
+        $str = get_class($this);
+        $class_name = strtolower(str_replace('Controller', '', end(explode('\\', $str))));
+        echo $this->render($class_name . '/oneuser', ['user' => $user]);
+    }*/
+
+
+    public function actionNewuserpage () {
+        $str = get_class($this);
+        $class_name = strtolower(str_replace('Controller', '', end(explode('\\', $str))));
+        echo $this->render($class_name . '/newuserpage', []);
+    }
+
+    public function actionCheckuserpage () {
+        $str = get_class($this);
+        $class_name = strtolower(str_replace('Controller', '', end(explode('\\', $str))));
+        echo $this->render($class_name . '/checkuserpage', []);
+    }
+
+    public function actionNewuser ()
+    {
+        $request = App::call()->request;
+        if ($request->isPost()) {
+            $login = $request->getParams()['login'];
+            $password = $request->getParams()['password'];
+            $name = $request->getParams()['name'];
+            $email = $request->getParams()['email'];
+            $address = $request->getParams()['address'];
+            $phone = $request->getParams()['phone'];
+            (new User())->add($login, $password, $name, $email, $address, $phone);
+        }
+    }
+
+    public function actionCheckuser () {
+        $request = App::call()->request;
+        if ($request->isPost()) {
+            $name = $request->getParams()['login'];
+            $password = $request->getParams()['password'];
+            (new User())->check($name, $password);
+        }
+    }
+
+    public function actionExituser () {
+        (new User())->exit();
+        header("Location: /");
     }
 }

@@ -10,8 +10,18 @@ class Feedback extends Record
     public $author;
     public $text;
 
-    public static function getTableName():string
+    /**
+     * Feedback constructor.
+     * @param $id
+     * @param $id_good
+     * @param $author
+     * @param $text
+     */
+    public function __construct($id = null, $id_good = null, $author = null, $text = null)
     {
-        return 'feedbacks';
+        $this->id = $id;
+        $this->id_good = $id_good;
+        $this->author = $author;
+        $this->text = $text;
     }
 }

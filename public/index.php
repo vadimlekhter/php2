@@ -1,6 +1,6 @@
 <?php
 
-use \app\models\Product;
+/*use \app\models\Product;
 use \app\models\repositories\CartRepository;
 use \app\models\User;
 use \app\models\Order;
@@ -12,46 +12,33 @@ use \app\models\Color;
 use \app\models\Size;
 use \app\services\Db;
 use \app\services\Autoloader;
-use \app\controllers\Controller;
+use \app\controllers\Controller;*/
 
+use app\base\App;
+
+$config = include '../config/main.php';
 
 require '../vendor/autoload.php';
 
-$request = new \app\services\Request();
+App::call()->run($config);
 
-$controllerName = $request->getControllerName() ?: DEFAULT_CONTROLLER;
-$actionName = $request->getActionName();
 
-$controllerClass = CONTROLLER_NAMESPACE.ucfirst($controllerName).'Controller';
 
-if (class_exists($controllerClass)) {
 
-    $controller = new $controllerClass(
-        new \app\services\renderers\TemplateRenderer()
-    );
-
-    /*$controller = new $controllerClass(
-        new \app\services\renderers\TwigRenderer()
-    );*/
-
-    $controller->runAction($actionName);
-} else {
-    header('Location: http:/error_404.php');
-}
 
 
 
 //$product = new Product();
 
-/*$cart = new CartRepository();
+/*$order = new \app\models\repositories\OrderRepository();
 $record = new \app\models\Record();
 $record->id = null;
 $record->user_id = 2;
-$record->good_id = 2;*/
+$record->good_id = 2;
+$record->count = 2;
 
 
-
-//$cart->save($record);
+$order->save($record);*/
 
 //$user = new User();
 
