@@ -1,0 +1,18 @@
+{
+  "name": "123/dz",
+  "authors": [
+    {
+      "name": "vadimlekhter",
+      "email": "v_lehter@mail.ru"
+    }
+  ],
+  "require": {
+    "twig/twig": "^2.6",
+    "phpunit/phpunit": "^7.5"
+  },
+  "autoload": {
+    "psr-4": {
+      "app\\": ""
+    }
+  }
+}
