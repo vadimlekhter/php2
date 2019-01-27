@@ -15,8 +15,7 @@ class CartController extends Controller
 {
     public function actionIndex()
     {
-        $str = get_class($this);
-        $class_name = strtolower(str_replace('Controller', '', end(explode('\\', $str))));
+        $class_name = $this->getclass();
         echo $this->render($class_name . '/allcarts', ['cart' => (new Cart())->getAll()]);
     }
 

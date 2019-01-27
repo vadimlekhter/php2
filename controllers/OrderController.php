@@ -25,8 +25,7 @@ class OrderController extends Controller
     public function actionIndex()
     {
         $order = (new Order())->getorder();
-        $str = get_class($this);
-        $class_name = strtolower(str_replace('Controller', '', end(explode('\\', $str))));
+        $class_name = $this->getclass();
         echo $this->render($class_name . '/allorders', ['order' => $order]);
     }
 
@@ -36,6 +35,7 @@ class OrderController extends Controller
         header("Location: {$request->getReferer()}");
         //echo json_encode(['success' => 'ok', 'message' => 'Заказ оформлен']);
     }
+
     /*public function actionOneorder()
     {
         $id = (new Request())->getParams()['id'];

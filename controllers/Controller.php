@@ -32,9 +32,11 @@ abstract class Controller implements IController
         $this->templateRenderer = $templateRenderer;
     }
 
-    /*public function setContentRenderer (IContentRenderer $contentRenderer) {
-        $this->contentRenderer = $contentRenderer;
-    }*/
+    protected function getclass () {
+        $str = get_class($this);
+        $class_name = strtolower(str_replace('Controller', '', end(explode('\\', $str))));
+        return $class_name;
+    }
 
 
     public function runAction($action = null)

@@ -53,6 +53,7 @@ class Order extends Record
                 $orderAdd->save($order);
             }
         }
+        (new Session())->delete('cart');
     }
 
     public function getorder()

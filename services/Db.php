@@ -27,7 +27,7 @@ class Db implements IDb
     }
 
 
-    private function getConnection()
+    public function getConnection()
     {
         if (is_null($this->conn)) {
                 $this->conn = new \PDO(

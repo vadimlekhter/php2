@@ -38,14 +38,12 @@ class UserController extends Controller
 
 
     public function actionNewuserpage () {
-        $str = get_class($this);
-        $class_name = strtolower(str_replace('Controller', '', end(explode('\\', $str))));
+        $class_name = $this->getclass();
         echo $this->render($class_name . '/newuserpage', []);
     }
 
     public function actionCheckuserpage () {
-        $str = get_class($this);
-        $class_name = strtolower(str_replace('Controller', '', end(explode('\\', $str))));
+        $class_name = $this->getclass();
         echo $this->render($class_name . '/checkuserpage', []);
     }
 

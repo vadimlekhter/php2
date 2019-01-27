@@ -30,8 +30,7 @@ class ProductController extends Controller
         if (is_null($product)) {
             throw new GetOneException ("Неверный запрос.");
         }
-        $str = get_class($this);
-        $class_name = strtolower(str_replace('Controller', '', end(explode('\\', $str))));
+        $class_name = $this->getclass();
         echo $this->render($class_name . '/card', ['product' => $product]);
     }
 }
