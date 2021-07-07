@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Клиенты</title>
+</head>
+<body>
+<br>
+
+{% for item in user %}
+    Имя : {{ item.name }} <br>
+    Логин : {{ item.login }} <br>
+    Телефон : {{ item.phone }} <br>
+    Адрес : {{ item.address }} <br>
+    E-mail : {{ item.email }} <br><br>
+{% endfor %}
+
+</body>
+</html>
